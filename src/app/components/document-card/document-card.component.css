@@ -1,0 +1,33 @@
+mat-card{
+  display: flex;
+
+
+}
+
+.left{
+  display: flex;
+  width: 100px;
+
+  justify-content: center;
+  align-items: center;
+
+}
+
+mat-icon{
+  font-size: 100px;
+  width: fit-content;
+  height: fit-content;
+  color: goldenrod;
+}
+
+.right{
+
+  padding-top: 20px;
+  padding-left: 10px;
+
+}
+
+mat-card-title{
+  font-size: large;
+}
+

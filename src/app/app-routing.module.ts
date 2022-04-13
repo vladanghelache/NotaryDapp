@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {SignDocumentComponent} from "./components/sign-document/sign-document.component";
+import {VerifyDocumentComponent} from "./components/verify-document/verify-document.component";
 
-const routes: Routes = [];
+const routes: Routes = [
+  {path: '', component: SignDocumentComponent},
+  {path: 'sign_document', component: SignDocumentComponent},
+  {path: 'verify_document', component: VerifyDocumentComponent},
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,0 +1,22 @@
+
+.form-container{
+  display: grid;
+  justify-content: center;
+  row-gap: 20px;
+  margin-top: 40px;
+
+}
+
+.form-component{
+  margin: 0 auto;
+}
+
+.show-document{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-document-button{
+  margin-left: 20px;
+}

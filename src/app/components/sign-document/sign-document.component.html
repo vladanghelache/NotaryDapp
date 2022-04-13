@@ -1,0 +1,22 @@
+
+
+<form [formGroup]="form">
+  <div class="form-container">
+    <app-dropzone formControlName="document" class="form-component"></app-dropzone>
+    <mat-error *ngIf="form.get('document')?.invalid" class="form-component">{{getFileErrorMessage()}}</mat-error>
+    <div class="show-document">
+      <app-document-card *ngIf="file" [file]="file">
+      </app-document-card>
+      <button mat-fab *ngIf="file" color="warn" type="button" (click)="deleteDocument()" class="delete-document-button"><mat-icon>delete</mat-icon></button>
+    </div>
+
+
+    <button mat-raised-button (click)="onSubmit()" type="submit" color="primary" class="form-component"><mat-icon>fingerprint</mat-icon>Sign document</button>
+  </div>
+
+
+
+</form>
+
+
+
