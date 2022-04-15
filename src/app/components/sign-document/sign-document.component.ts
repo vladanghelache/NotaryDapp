@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
-//import * as shajs from 'sha.js';
+import * as shajs from 'sha.js';
+import {AuthenticityService} from "../../services/authenticity.service";
 
 @Component({
   selector: 'app-sign-document',
   templateUrl: './sign-document.component.html',
-  styleUrls: ['./sign-document.component.css']
+  styleUrls: ['./sign-document.component.css'],
+  providers: [AuthenticityService]
 })
 export class SignDocumentComponent implements OnInit {
   form = this.formBuilder.group({
@@ -13,7 +15,9 @@ export class SignDocumentComponent implements OnInit {
   })
 
   file!: File | null ;
-  constructor(private formBuilder: FormBuilder) { }
+  fileContent: String ="";
+  constructor(private formBuilder: FormBuilder,
+              private authenticityService: AuthenticityService) { }
 
   ngOnInit(): void {
     this.onChanges();
@@ -23,25 +27,31 @@ export class SignDocumentComponent implements OnInit {
     console.log(this.form.value);
     if (this.form.valid){
       let formData = this.form.value;
-      let string = this.readDocument()
-      let hex = ""
-      if (string)
-        //hex = shajs('sha256').update(string).digest('hex')
+      let fileReader = new FileReader();
+      fileReader.onload = (e) => {
 
-      console.log(hex)
+        let hex = "";
+        if (fileReader.result)
+        {
+          hex = shajs('sha256').update(fileReader.result.toString()).digest('hex').toString()
+          console.log(hex);
+          this.authenticityService
+            .certifyFile(this.file?.size ? this.file?.size : 0, hex, this.file?.type ? this.file?.type : "")
+            .then(function() {}).catch(function(error) {
+            console.log(error);
+          });
+        }
+
+      }
+      if (this.file)
+        fileReader.readAsText(this.file);
+
+
       console.log(formData)
     }
   }
 
-  readDocument() {
-    let fileReader = new FileReader();
-    fileReader.onload = (e) => {
-      console.log(fileReader.result);
-    }
-    if (this.file)
-      return fileReader.readAsText(this.file);
-    else return null;
-  }
+
 
   onChanges(): void {
     this.form.valueChanges.subscribe(val => {
