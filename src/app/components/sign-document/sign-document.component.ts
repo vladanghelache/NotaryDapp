@@ -16,6 +16,7 @@ export class SignDocumentComponent implements OnInit {
 
   file!: File | null ;
   fileContent: String ="";
+  signed = false;
   constructor(private formBuilder: FormBuilder,
               private authenticityService: AuthenticityService) { }
 
@@ -28,6 +29,7 @@ export class SignDocumentComponent implements OnInit {
     if (this.form.valid){
       let formData = this.form.value;
       let fileReader = new FileReader();
+      let that = this;
       fileReader.onload = (e) => {
 
         let hex = "";
@@ -37,7 +39,12 @@ export class SignDocumentComponent implements OnInit {
           console.log(hex);
           this.authenticityService
             .certifyFile(this.file?.size ? this.file?.size : 0, hex, this.file?.type ? this.file?.type : "")
-            .then(function() {}).catch(function(error) {
+            .then(function() {
+              console.log("Document with hash: " + hex + " has been signed");
+              that.deleteDocument();
+              that.signed = true;
+
+            }).catch(function(error) {
             console.log(error);
           });
         }
@@ -56,6 +63,7 @@ export class SignDocumentComponent implements OnInit {
   onChanges(): void {
     this.form.valueChanges.subscribe(val => {
       this.file = val.document;
+      this.signed = false;
       console.log(this.file);
     });
   }

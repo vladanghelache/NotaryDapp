@@ -13,6 +13,8 @@ export class AuthenticityService {
   private account: any = null;
   private readonly web3: any;
   private enable: any;
+  private contract: any;
+  private authenticityContract: any;
   //
   constructor() {
     console.log("asdfasdfasdfasdfa")
@@ -33,6 +35,12 @@ export class AuthenticityService {
       console.log(this.web3);
       this.enable = this.enableMetaMaskAccount();
       this.account = this.getAccount();
+
+      this.contract = require('@truffle/contract');
+      console.log("bbbbbbbbbbbbbbbbbbb")
+      console.log(this.contract)
+      this.authenticityContract = this.contract(tokenAbi);
+      this.authenticityContract.setProvider(this.web3);
 
 
 
@@ -81,16 +89,39 @@ export class AuthenticityService {
 
       try {
 
-        let contract = require('@truffle/contract');
-        console.log("bbbbbbbbbbbbbbbbbbb")
-        console.log(contract)
-        const authenticityContract = contract(tokenAbi);
-        authenticityContract.setProvider(that.web3);
-        authenticityContract.deployed().then(function (instance: any) {
+        that.authenticityContract.deployed().then(function (instance: any) {
           return instance.certifyFile(size, hash, fileExtension,{from: that.account});
         }).then(function(status: any) {
           if (status) {
             return resolve ({status: true});
+          }
+        }).catch(function (error: any) {
+          console.log(error);
+          return reject('authenticity.service error');
+        });
+      }
+      catch (e){
+        console.log(e);
+      }
+
+
+    });
+  }
+
+  verifyFile(hash:string){
+    const that = this;
+
+    return new Promise((resolve, reject) => {
+
+      try {
+
+        that.authenticityContract.deployed().then(function (instance: any) {
+
+
+          return instance.verifyFile(hash,{from: that.account});
+        }).then(function(data: any) {
+          if (data) {
+            return resolve (data);
           }
         }).catch(function (error: any) {
           console.log(error);

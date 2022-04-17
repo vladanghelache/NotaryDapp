@@ -1,0 +1,48 @@
+.main-container{
+  margin-top:50px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1400px;
+
+  width: fit-content;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.right{
+  width: 500px;
+  min-height: 500px;
+  background-color: #f2f2f2;
+  border-radius: inherit;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+
+}
+
+.left{
+  height: 100%;
+}
+
+.form-container{
+  display: grid;
+  justify-content: center;
+  row-gap: 20px;
+  padding: 20px;
+
+}
+
+.form-component{
+  margin: 0 auto;
+}
+
+.show-document{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-document-button{
+  margin-left: 20px;
+}

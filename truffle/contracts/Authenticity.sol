@@ -1,5 +1,5 @@
 //declare the solidity compiler version
-pragma solidity ^0.5.12;
+pragma solidity ^0.5.16;
 
 //declare the contract
 contract Authenticity {

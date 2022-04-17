@@ -1,5 +1,9 @@
 
 
+<div class="message-container" *ngIf="signed">
+  <p class="success-message">Congratulation! Your document has been signed successfully</p>
+</div>
+
 <form [formGroup]="form">
   <div class="form-container">
     <app-dropzone formControlName="document" class="form-component"></app-dropzone>

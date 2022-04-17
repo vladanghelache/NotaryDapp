@@ -1,0 +1,40 @@
+.container{
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  background-color: blue;
+  color: white;
+
+}
+
+
+.grey{
+  color: grey;
+}
+
+.avatar{
+  background-color: white;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar>mat-icon{
+  text-align: center;
+  font-size: 100px;
+  width: 100px;
+  height: 100px;
+  color: goldenrod;
+
+}
+
+.details-container{
+  margin-top: 20px;
+  width: 300px;
+}
+
+.break-word{
+  word-break: break-all;
+}

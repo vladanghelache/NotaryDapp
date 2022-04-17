@@ -11,18 +11,20 @@ import { VerifyDocumentComponent } from './components/verify-document/verify-doc
 import { UploadDirective } from './directives/upload.directive';
 import {ReactiveFormsModule} from "@angular/forms";
 import { DocumentCardComponent } from './components/document-card/document-card.component';
+import {DetailsCardComponent} from "./components/details-card/details-card.component";
 
 
 // @ts-ignore
 @NgModule({
-  declarations: [
-    AppComponent,
-    DropzoneComponent,
-    SignDocumentComponent,
-    VerifyDocumentComponent,
-    UploadDirective,
-    DocumentCardComponent
-  ],
+    declarations: [
+        AppComponent,
+        DropzoneComponent,
+        SignDocumentComponent,
+        VerifyDocumentComponent,
+        UploadDirective,
+        DocumentCardComponent,
+        DetailsCardComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

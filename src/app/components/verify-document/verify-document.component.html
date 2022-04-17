@@ -1,1 +1,26 @@
-<p>verify-document works!</p>
+<mat-card class="main-container">
+  <div class="left">
+    <form [formGroup]="form">
+      <div class="form-container">
+        <app-dropzone formControlName="document" class="form-component"></app-dropzone>
+        <mat-error *ngIf="form.get('document')?.invalid" class="form-component">{{getFileErrorMessage()}}</mat-error>
+        <div class="show-document">
+          <app-document-card *ngIf="file" [file]="file">
+          </app-document-card>
+          <button mat-fab *ngIf="file" color="warn" type="button" (click)="deleteDocument()" class="delete-document-button"><mat-icon>delete</mat-icon></button>
+        </div>
+
+
+        <button mat-raised-button (click)="onSubmit()" type="submit" color="primary" class="form-component"><mat-icon>check</mat-icon>Verify document</button>
+      </div>
+
+
+
+    </form>
+  </div>
+
+  <div class="right">
+    <app-details-card *ngIf="docFound" [details]="details"></app-details-card>
+    <div *ngIf="showMessage">Your document is not signed</div>
+  </div>
+</mat-card>
