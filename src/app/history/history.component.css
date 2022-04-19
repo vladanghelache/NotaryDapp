@@ -1,0 +1,8 @@
+.signatures-container{
+  display: grid;
+  padding: 20px 20px;
+  justify-content: center;
+  grid-template-columns:repeat(auto-fit, 360px);
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+}

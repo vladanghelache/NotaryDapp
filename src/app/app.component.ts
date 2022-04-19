@@ -18,4 +18,8 @@ export class AppComponent {
   goToVerifyDocument(){
     this.router.navigateByUrl("/verify_document");
   }
+
+  goToHistory() {
+    this.router.navigateByUrl("/history");
+  }
 }

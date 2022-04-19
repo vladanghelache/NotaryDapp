@@ -12,6 +12,7 @@ import { UploadDirective } from './directives/upload.directive';
 import {ReactiveFormsModule} from "@angular/forms";
 import { DocumentCardComponent } from './components/document-card/document-card.component';
 import {DetailsCardComponent} from "./components/details-card/details-card.component";
+import { HistoryComponent } from './history/history.component';
 
 
 // @ts-ignore
@@ -23,7 +24,8 @@ import {DetailsCardComponent} from "./components/details-card/details-card.compo
         VerifyDocumentComponent,
         UploadDirective,
         DocumentCardComponent,
-        DetailsCardComponent
+        DetailsCardComponent,
+        HistoryComponent
     ],
   imports: [
     BrowserModule,

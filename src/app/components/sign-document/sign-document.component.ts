@@ -38,7 +38,7 @@ export class SignDocumentComponent implements OnInit {
           hex = shajs('sha256').update(fileReader.result.toString()).digest('hex').toString()
           console.log(hex);
           this.authenticityService
-            .certifyFile(this.file?.size ? this.file?.size : 0, hex, this.file?.type ? this.file?.type : "")
+            .signDocument(this.file?.size ? this.file?.size : 0, hex, this.file?.type ? this.file?.type : "")
             .then(function() {
               console.log("Document with hash: " + hex + " has been signed");
               that.deleteDocument();

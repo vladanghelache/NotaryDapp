@@ -1,35 +1,73 @@
-//declare the solidity compiler version
 pragma solidity ^0.5.16;
+pragma experimental ABIEncoderV2;
 
-//declare the contract
 contract Authenticity {
 
-  //declare the event that will be fired when a file is certified.
-  event FileCertified(address author, string fileHash, uint timestamp, uint fileSize, string fileExtension);
+  // event that will be fired when a file is certified.
+  event DocumentSigned(address author, string hash, uint timestamp, uint size, string docType);
 
-  //declare a structured data that describes a certified file
-  struct FileCertificate {
+  //struct that describes a signature for a document
+  struct Signature {
     address author;
-    string fileHash;
+    string hash;
     uint timestamp;
-    uint fileSize;
-    string fileExtension;
+    uint size;
+    string docType;
   }
 
-  //declare an object that will store the file certificates by hash
-  mapping (string => FileCertificate) fileCertificatesMap;
+  //map that will store the signatures by hash
+  mapping (string => Signature) signaturesMap;
+  //array for signatures
+  Signature[] signaturesArray;
 
-  //function that allows users to certify a file
-  function certifyFile(uint fileSize, string memory fileHash, string memory fileExtension) public payable {
-    FileCertificate memory newFileCertificate = FileCertificate(msg.sender, fileHash, block.timestamp, fileSize, fileExtension);
-    fileCertificatesMap[fileHash] = newFileCertificate;
-    emit FileCertified(msg.sender, fileHash, block.timestamp, fileSize, fileExtension);
+  //function used for signing a document
+  function signDocument(uint size, string memory hash, string memory docType) public payable {
+    require((signaturesMap[hash].size == 0 &&
+              keccak256(abi.encodePacked(signaturesMap[hash].hash)) == keccak256(abi.encodePacked("")) &&
+              keccak256(abi.encodePacked(signaturesMap[hash].docType)) == keccak256(abi.encodePacked(""))),
+            "document already signed");
+
+
+      Signature memory newSignature = Signature(msg.sender, hash, block.timestamp, size, docType);
+      signaturesMap[hash] = newSignature;
+      signaturesArray.push(newSignature);
+      emit DocumentSigned(msg.sender, hash, block.timestamp, size, docType);
+
+
   }
 
-  //function that allows users to verify if a file has been certified before
-  function verifyFile(string memory fileHash) public view returns (address, string memory, uint, uint, string memory) {
-    return (fileCertificatesMap[fileHash].author, fileCertificatesMap[fileHash].fileHash, fileCertificatesMap[fileHash].timestamp, fileCertificatesMap[fileHash].fileSize, fileCertificatesMap[fileHash].fileExtension);
+  //function used for checking if a document has been sign; returns a signature for a given document hash
+  function verifyDocument(string memory hash) public view returns (address, string memory, uint, uint, string memory) {
+    return (
+            signaturesMap[hash].author,
+            signaturesMap[hash].hash,
+            signaturesMap[hash].timestamp,
+            signaturesMap[hash].size,
+            signaturesMap[hash].docType
+    );
   }
 
+  //function used for returning an array of signatures associated with an account
+  function getSignatures() public view returns (Signature[] memory){
+    uint count = 0;
+    for (uint i = 0; i < signaturesArray.length; i++) {
+      Signature storage signature = signaturesArray[i];
+      if(keccak256(abi.encodePacked(signature.author)) == keccak256(abi.encodePacked(msg.sender))){
+        count++;
+      }
+    }
 
+    Signature[] memory newArray = new Signature[](count);
+    uint j = 0;
+    for (uint i = 0; i < signaturesArray.length; i++) {
+      Signature storage signature = signaturesArray[i];
+      if(keccak256(abi.encodePacked(signature.author)) == keccak256(abi.encodePacked(msg.sender))){
+        newArray[j] = signature;
+        j = j + 1;
+      }
+    }
+    return newArray;
+  }
 }
+
+

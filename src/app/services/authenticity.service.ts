@@ -82,7 +82,7 @@ export class AuthenticityService {
     return Promise.resolve(this.account);
   }
 
-  certifyFile(size: number, hash: string, fileExtension:string){
+  signDocument(size: number, hash: string, fileExtension:string){
     const that = this;
 
     return new Promise((resolve, reject) => {
@@ -90,7 +90,7 @@ export class AuthenticityService {
       try {
 
         that.authenticityContract.deployed().then(function (instance: any) {
-          return instance.certifyFile(size, hash, fileExtension,{from: that.account});
+          return instance.signDocument(size, hash, fileExtension,{from: that.account});
         }).then(function(status: any) {
           if (status) {
             return resolve ({status: true});
@@ -108,7 +108,7 @@ export class AuthenticityService {
     });
   }
 
-  verifyFile(hash:string){
+  verifyDocument(hash:string){
     const that = this;
 
     return new Promise((resolve, reject) => {
@@ -118,9 +118,38 @@ export class AuthenticityService {
         that.authenticityContract.deployed().then(function (instance: any) {
 
 
-          return instance.verifyFile(hash,{from: that.account});
+          return instance.verifyDocument(hash,{from: that.account});
         }).then(function(data: any) {
           if (data) {
+            return resolve (data);
+          }
+        }).catch(function (error: any) {
+          console.log(error);
+          return reject('authenticity.service error');
+        });
+      }
+      catch (e){
+        console.log(e);
+      }
+
+
+    });
+  }
+
+  getSignatures(){
+    const that = this;
+
+    return new Promise((resolve, reject) => {
+
+      try {
+
+        that.authenticityContract.deployed().then(function (instance: any) {
+
+
+          return instance.getSignatures({from: that.account});
+        }).then(function(data: any) {
+          if (data) {
+            console.log(data);
             return resolve (data);
           }
         }).catch(function (error: any) {

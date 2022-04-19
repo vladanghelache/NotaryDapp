@@ -43,7 +43,7 @@ export class VerifyDocumentComponent implements OnInit {
           console.log(hex);
           let aux =
           this.authenticityService
-            .verifyFile( hex)
+            .verifyDocument(hex)
             .then((value:any) => {
               console.log(value);
 
