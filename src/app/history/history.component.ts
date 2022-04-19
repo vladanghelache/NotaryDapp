@@ -31,7 +31,7 @@ export class HistoryComponent implements OnInit {
           signature.hash = elem[1];
           signature.type = elem[4];
           signature.date = new Date(elem[2] * 1000);
-          signature.size = elem[3][0];
+          signature.size = elem[3];
 
           that.signatures.push(signature);
         }

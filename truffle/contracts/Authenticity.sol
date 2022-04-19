@@ -3,7 +3,7 @@ pragma experimental ABIEncoderV2;
 
 contract Authenticity {
 
-  // event that will be fired when a file is certified.
+  // event that will be fired when a document is signed
   event DocumentSigned(address author, string hash, uint timestamp, uint size, string docType);
 
   //struct that describes a signature for a document
@@ -37,14 +37,11 @@ contract Authenticity {
   }
 
   //function used for checking if a document has been sign; returns a signature for a given document hash
-  function verifyDocument(string memory hash) public view returns (address, string memory, uint, uint, string memory) {
-    return (
-            signaturesMap[hash].author,
-            signaturesMap[hash].hash,
-            signaturesMap[hash].timestamp,
-            signaturesMap[hash].size,
-            signaturesMap[hash].docType
-    );
+  function verifyDocument(string memory hash) public view returns (Signature memory) {
+
+    Signature memory newSignature = signaturesMap[hash];
+
+    return newSignature;
   }
 
   //function used for returning an array of signatures associated with an account

@@ -2,19 +2,19 @@
   display: grid;
   justify-items: center;
   align-items: center;
-  background-color: blue;
-  color: white;
+  background-color: white;
+  color: black;
   width: 320px;
 
 }
 
 
 .grey{
-  color: grey;
+  color: #d9268d;
 }
 
 .avatar{
-  background-color: white;
+  background-color: black;
   width: 120px;
   height: 120px;
   display: flex;
@@ -27,7 +27,7 @@
   font-size: 100px;
   width: 100px;
   height: 100px;
-  color: goldenrod;
+  color: #d9268d;
 
 }
 

@@ -50,9 +50,9 @@ export class VerifyDocumentComponent implements OnInit {
               this.details.account = value[0];
               this.details.hash = value[1];
               this.details.type = value[4];
-              console.log(value[2]["words"][0]*1000);
-              this.details.date = new Date(value[2]["words"][0] * 1000);
-              this.details.size = value[3]["words"][0];
+              console.log(value[2]*1000);
+              this.details.date = new Date(value[2] * 1000);
+              this.details.size = value[3];
 
               if (this.details.account != "0x0000000000000000000000000000000000000000" &&
                   this.details.hash != "" && this.details.size != 0 && this.details.type != ""){
